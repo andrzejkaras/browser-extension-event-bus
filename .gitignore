@@ -1,0 +1,6 @@
+# Project related
+/node_modules
+/dist
+
+# IDE
+.idea

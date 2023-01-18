@@ -132,3 +132,7 @@ It's implementation of beta version. So please watch out while using it. All ins
 # Changelog
 
 Check CHANGELOG.md file for more details.
+
+# Hall of Fame
+
+- [@elwin013](https://github.com/elwin013)

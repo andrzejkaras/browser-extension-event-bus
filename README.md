@@ -121,7 +121,7 @@ MIT - Check LICENSE file.
 
 # ONE MORE WARN
 
-It's implementation of 0.0.1 version. So please watch out while using it. All insights, tips and bug reports are welcome!
+It's implementation of beta version. So please watch out while using it. All insights, tips and bug reports are welcome!
 
 # Changelog
 

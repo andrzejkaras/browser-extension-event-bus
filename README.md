@@ -30,7 +30,13 @@ Events are persisted as soon as possible, then all subscribers receive them.
 `NPM` - use command presented below
 
 ```shell
-# TODO: add examples
+npm i extension-event-bus
+```
+
+`YARN` - use command presented below
+
+```shell
+yarn add extension-event-bus
 ```
 
 ## Dependencies

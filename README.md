@@ -136,3 +136,4 @@ Check CHANGELOG.md file for more details.
 # Hall of Fame
 
 - [@elwin013](https://github.com/elwin013)
+- [okosowski](https://github.com/okosowski) 

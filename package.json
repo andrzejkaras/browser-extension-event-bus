@@ -1,6 +1,6 @@
 {
   "name": "extension-event-bus",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Event bus for browser extensions",
   "author": "Andrzej Karaś",
   "license": "MIT",
@@ -10,14 +10,12 @@
     "extension",
     "event-bus"
   ],
-
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "exports": {
     "import": "./dist/esm/index.js",
     "require": "./dist/cjs/index.js"
   },
-
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com:andrzejkaras/browser-extension-event-bus.git"
@@ -26,7 +24,6 @@
     "url": "https://github.com/andrzejkaras/browser-extension-event-bus/issues"
   },
   "homepage": "https://github.com/andrzejkaras/browser-extension-event-bus#readme",
-
   "scripts": {
     "build": "tsc -p . --outDir dist/esm && tsc -p . --module commonjs --outDir dist/cjs"
   },
@@ -34,7 +31,6 @@
     "dist/**/*",
     "src/**/*"
   ],
-
   "dependencies": {
     "webextension-polyfill": "^0.9.0"
   },

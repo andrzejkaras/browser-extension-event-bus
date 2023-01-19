@@ -4,7 +4,7 @@ import { ILocalStorage } from "../iLocalStorage";
 export default class LocalStorage implements ILocalStorage {
     private browser: Browser;
     private changeListener!: Function;
-   public constructor(browser: Browser) {
+    public constructor(browser: Browser) {
        this.browser = browser;
 
        this.browser.storage.local.onChanged.addListener(async (changes: Storage.StorageAreaOnChangedChangesType) => {

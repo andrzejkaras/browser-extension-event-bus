@@ -97,6 +97,11 @@ await eventBus.send('numbers',10);
 
 Library is still on development stage. So please create an issues if you have some ideas or problems.
 
+### Unit tests
+
+If you want implement some new features or test something locally you can use `Jest` framework to do it. Take a look at `__tests__` directory. In order to run all tests please execute `npm run test` command.
+
+
 ## Known issues and limitations
 
 As you know we could distinguish a couple of sub-packages in browser extension:

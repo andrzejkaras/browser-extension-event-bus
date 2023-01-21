@@ -120,7 +120,6 @@ We need to initialize our event bus in each context itself. Because an event bus
 - Reviewing events from given topic
 - Supporting cross context communication
 - Implement in-memory version if needed
-- Implement unit tests
 - Implement preloading events from storage if needed
 - Define event as a type
 - Add prop that defines trusted level

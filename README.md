@@ -6,7 +6,7 @@
 
 After Google announced Manifest V3 for browser extensions, then we as developers could not use persistent background page anymore. What worse we have to use Service worker, which could be inactive from time to time. So simple in-memory event bus implementation is not enough.
 
-## TL:;DR:
+## TL;DR:
 
 This tool allows (**again**) to decouple business logic hidden in orthogonal modules written for MV3 extensions.
 

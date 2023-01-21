@@ -1,6 +1,6 @@
 {
   "name": "extension-event-bus",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Event bus for browser extensions",
   "author": "Andrzej Karaś",
   "license": "MIT",

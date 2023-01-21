@@ -30,6 +30,10 @@ export default class EventBus implements IEventBus {
         this.listeners.set(topic, temp);
     }
 
+    public hasSubscribers(topic: string): boolean {
+        return this.listeners.has(topic);
+    }
+
     private async handle(map: Map<any, any>): Promise<void> {
         for (let [key, value] of map.entries()) {
             const topic = key.split(this.delimiter)[0];

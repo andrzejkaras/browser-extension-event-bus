@@ -1,5 +1,8 @@
 # Project related
 /node_modules
 
+# Tests
+/coverage
+
 # IDE
 .idea

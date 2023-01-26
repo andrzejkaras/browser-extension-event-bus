@@ -116,7 +116,6 @@ We need to initialize our event bus in each context itself. Because an event bus
 
 ## TODOs
 
-- Removing events once all subscribers receive them
 - Reviewing events from given topic
 - Supporting cross context communication
 - Implement in-memory version if needed

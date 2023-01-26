@@ -9,10 +9,10 @@ const localStorage_1 = __importDefault(require("./localStorage"));
 const webextension_polyfill_1 = __importDefault(require("webextension-polyfill"));
 const browser = webextension_polyfill_1.default;
 class EventBusFactory {
-    static getEventBus() {
+    static getEventBus(config) {
         if (!EventBusFactory.eventBus) {
             const localStorage = new localStorage_1.default(browser);
-            const bus = new eventBus_1.default(localStorage);
+            const bus = new eventBus_1.default(config, localStorage);
             EventBusFactory.eventBus = bus;
         }
         return EventBusFactory.eventBus;

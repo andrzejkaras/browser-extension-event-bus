@@ -32,4 +32,14 @@ export default class LocalStorage {
             return false;
         }
     }
+    async remove(key) {
+        try {
+            await this.browser.storage.local.remove(key);
+            return true;
+        }
+        catch (e) {
+            console.error('[EventBus] Error during removing data for key: ' + key);
+            return false;
+        }
+    }
 }

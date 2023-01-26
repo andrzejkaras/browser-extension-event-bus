@@ -6,4 +6,5 @@ export default class LocalStorage implements ILocalStorage {
     constructor(browser: Browser);
     registerListener(changeListener: Function): void;
     save(key: string, data: any): Promise<boolean>;
+    remove(key: string): Promise<boolean>;
 }

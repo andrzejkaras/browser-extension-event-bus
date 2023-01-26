@@ -1,13 +1,15 @@
 import { IEventBus } from "../iEventBus";
 import { ILocalStorage } from "../iLocalStorage";
+import { Config } from "./config";
 
 export default class EventBus implements IEventBus {
-    private readonly delimiter: string = '_';
+    private config: Config;
     private storage: ILocalStorage;
 
     private listeners: Map<string, Function[]> = new Map<string, Function[]>();
 
-    public constructor(storage: ILocalStorage) {
+    public constructor(config: Config, storage: ILocalStorage) {
+        this.config = config;
         this.storage = storage;
         this.storage.registerListener(async (map: Map<any, any>) => {
             await this.handle(map);
@@ -15,7 +17,7 @@ export default class EventBus implements IEventBus {
     }
 
     public async send(topic: string, data: any): Promise<boolean> {
-        const key = topic + this.delimiter + this.getTime();
+        const key = topic + this.config.delimiter + this.getTime();
         return await this.storage.save(key, data);
     }
 
@@ -36,8 +38,8 @@ export default class EventBus implements IEventBus {
 
     private async handle(map: Map<any, any>): Promise<void> {
         for (let [key, value] of map.entries()) {
-            const topic = key.split(this.delimiter)[0];
-            if (key.includes(topic)) {
+            const topic = key.split(this.config.delimiter)[0];
+            if (key.includes(topic) && this.isNewEvent(value)) {
                 console.log('Handling event with id: ' + key);
 
                 const listeners: Function[] | undefined = this.listeners.get(topic);
@@ -46,9 +48,17 @@ export default class EventBus implements IEventBus {
                         // @ts-ignore
                         listener(value.newValue)
                     }
+
+                    if (this.config.removeOnceReceived) {
+                        await this.storage.remove(key);
+                    }
                 }
             }
         }
+    }
+
+    private isNewEvent(value: any): boolean {
+        return value && !value.oldValue && value.newValue;
     }
 
     private getTime(): number {

@@ -6,7 +6,6 @@ export default class LocalStorage implements ILocalStorage {
     private changeListener!: Function;
     public constructor(browser: Browser) {
        this.browser = browser;
-
        this.browser.storage.local.onChanged.addListener(async (changes: Storage.StorageAreaOnChangedChangesType) => {
            const map = new Map(Object.entries(changes));
            if (map.size > 0) {
@@ -38,6 +37,16 @@ export default class LocalStorage implements ILocalStorage {
             return true;
         } catch (error) {
             console.error('[EventBus] Error during saving data for key: ' + key + ' error: ' + JSON.stringify(error, null, 2));
+            return false;
+        }
+    }
+
+    public async remove(key: string): Promise<boolean> {
+        try {
+            await this.browser.storage.local.remove(key);
+            return true;
+        } catch (e) {
+            console.error('[EventBus] Error during removing data for key: ' + key);
             return false;
         }
     }

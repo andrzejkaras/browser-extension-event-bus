@@ -1,14 +1,14 @@
 export default class EventBus {
-    constructor(storage) {
-        this.delimiter = '_';
+    constructor(config, storage) {
         this.listeners = new Map();
+        this.config = config;
         this.storage = storage;
         this.storage.registerListener(async (map) => {
             await this.handle(map);
         });
     }
     async send(topic, data) {
-        const key = topic + this.delimiter + this.getTime();
+        const key = topic + this.config.delimiter + this.getTime();
         return await this.storage.save(key, data);
     }
     async subscribe(topic, f) {
@@ -20,10 +20,13 @@ export default class EventBus {
         temp.push(f);
         this.listeners.set(topic, temp);
     }
+    hasSubscribers(topic) {
+        return this.listeners.has(topic);
+    }
     async handle(map) {
         for (let [key, value] of map.entries()) {
-            const topic = key.split(this.delimiter)[0];
-            if (key.includes(topic)) {
+            const topic = key.split(this.config.delimiter)[0];
+            if (key.includes(topic) && this.isNewEvent(value)) {
                 console.log('Handling event with id: ' + key);
                 const listeners = this.listeners.get(topic);
                 if (listeners && listeners.length > 0) {
@@ -31,9 +34,15 @@ export default class EventBus {
                         // @ts-ignore
                         listener(value.newValue);
                     }
+                    if (this.config.removeOnceReceived) {
+                        await this.storage.remove(key);
+                    }
                 }
             }
         }
+    }
+    isNewEvent(value) {
+        return value && !value.oldValue && value.newValue;
     }
     getTime() {
         return new Date().getTime();

@@ -6,7 +6,7 @@ export default class EventBus implements IEventBus {
     private storage;
     private listeners;
     constructor(config: Config, storage: ILocalStorage);
-    send(topic: string, data: any): Promise<boolean>;
+    send(topic: string, data?: any): Promise<boolean>;
     subscribe(topic: string, f: Function): Promise<void>;
     hasSubscribers(topic: string): boolean;
     private handle;

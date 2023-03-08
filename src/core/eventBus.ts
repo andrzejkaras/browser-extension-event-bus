@@ -24,6 +24,7 @@ export default class EventBus implements IEventBus {
         });
     }
 
+    // TODO: subscribe for many topics at the same time
     public async subscribe(topic: string, f: Function): Promise<void> {
         const temp = this.listeners.get(topic);
         if (!temp) {

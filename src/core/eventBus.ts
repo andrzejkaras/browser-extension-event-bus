@@ -18,7 +18,10 @@ export default class EventBus implements IEventBus {
 
     public async send(topic: string, data: any): Promise<boolean> {
         const key = topic + this.config.delimiter + this.getTime();
-        return await this.storage.save(key, data);
+        return await this.storage.save(key, {
+            isEmpty: this.isEmptyEvent(data),
+            data: data
+        });
     }
 
     public async subscribe(topic: string, f: Function): Promise<void> {
@@ -45,8 +48,12 @@ export default class EventBus implements IEventBus {
                 const listeners: Function[] | undefined = this.listeners.get(topic);
                 if (listeners && listeners.length > 0) {
                     for (const listener of listeners) {
-                        // @ts-ignore
-                        listener(value.newValue)
+                        const data = value.newValue.data;
+                        if (this.isEmptyEvent(data)) {
+                            listener(data);
+                        } else {
+                            listener();
+                        }
                     }
 
                     if (this.config.removeOnceReceived) {
@@ -63,5 +70,9 @@ export default class EventBus implements IEventBus {
 
     private getTime(): number {
         return new Date().getTime();
+    }
+
+    private isEmptyEvent(data: any): boolean {
+        return !data || Object.keys(data).length === 0;
     }
 }

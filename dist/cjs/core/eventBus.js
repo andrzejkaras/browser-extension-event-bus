@@ -11,7 +11,10 @@ class EventBus {
     }
     async send(topic, data) {
         const key = topic + this.config.delimiter + this.getTime();
-        return await this.storage.save(key, data);
+        return await this.storage.save(key, {
+            isEmpty: this.isEmptyEvent(data),
+            data: data
+        });
     }
     async subscribe(topic, f) {
         const temp = this.listeners.get(topic);
@@ -33,8 +36,13 @@ class EventBus {
                 const listeners = this.listeners.get(topic);
                 if (listeners && listeners.length > 0) {
                     for (const listener of listeners) {
-                        // @ts-ignore
-                        listener(value.newValue);
+                        const data = value.newValue.data;
+                        if (this.isEmptyEvent(data)) {
+                            listener(data);
+                        }
+                        else {
+                            listener();
+                        }
                     }
                     if (this.config.removeOnceReceived) {
                         await this.storage.remove(key);
@@ -48,6 +56,9 @@ class EventBus {
     }
     getTime() {
         return new Date().getTime();
+    }
+    isEmptyEvent(data) {
+        return !data || Object.keys(data).length === 0;
     }
 }
 exports.default = EventBus;

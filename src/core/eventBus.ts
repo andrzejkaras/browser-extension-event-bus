@@ -16,7 +16,7 @@ export default class EventBus implements IEventBus {
         });
     }
 
-    public async send(topic: string, data: any): Promise<boolean> {
+    public async send(topic: string, data?: any): Promise<boolean> {
         const key = topic + this.config.delimiter + this.getTime();
         return await this.storage.save(key, {
             isEmpty: this.isEmptyEvent(data),

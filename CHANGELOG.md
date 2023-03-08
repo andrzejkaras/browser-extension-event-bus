@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [0.3.1] - 2023-03-08
+
+- Fixed handling events that no contains data
+
 ## [0.3.0] - 2023-01-26
 
 - Introduced config for event bus

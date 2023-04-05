@@ -14,6 +14,7 @@ export default class EventBus {
             data: data
         });
     }
+    // TODO: subscribe for many topics at the same time
     async subscribe(topic, f) {
         const temp = this.listeners.get(topic);
         if (!temp) {
@@ -35,7 +36,7 @@ export default class EventBus {
                 if (listeners && listeners.length > 0) {
                     for (const listener of listeners) {
                         const data = value.newValue.data;
-                        if (this.isEmptyEvent(data)) {
+                        if (!this.isEmptyEvent(data)) {
                             listener(data);
                         }
                         else {

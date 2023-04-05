@@ -50,7 +50,7 @@ export default class EventBus implements IEventBus {
                 if (listeners && listeners.length > 0) {
                     for (const listener of listeners) {
                         const data = value.newValue.data;
-                        if (this.isEmptyEvent(data)) {
+                        if (!this.isEmptyEvent(data)) {
                             listener(data);
                         } else {
                             listener();

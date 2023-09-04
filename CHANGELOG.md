@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [0.4.0] - 2023-09-04
+
+- Added prefix to all event passed to event-bus
+- Changed removeOnceReceived to true by default
+
 ## [0.3.3] - 2023-03-08
 
 - Regenerated types for event bus interface

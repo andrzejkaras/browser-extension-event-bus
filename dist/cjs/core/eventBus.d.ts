@@ -13,4 +13,6 @@ export default class EventBus implements IEventBus {
     private isNewEvent;
     private getTime;
     private isEmptyEvent;
+    private generateKey;
+    private retrieveTopic;
 }

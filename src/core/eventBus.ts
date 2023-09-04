@@ -17,7 +17,7 @@ export default class EventBus implements IEventBus {
     }
 
     public async send(topic: string, data?: any): Promise<boolean> {
-        const key = topic + this.config.delimiter + this.getTime();
+        const key: string = this.generateKey(topic);
         return await this.storage.save(key, {
             isEmpty: this.isEmptyEvent(data),
             data: data
@@ -42,7 +42,7 @@ export default class EventBus implements IEventBus {
 
     private async handle(map: Map<any, any>): Promise<void> {
         for (let [key, value] of map.entries()) {
-            const topic = key.split(this.config.delimiter)[0];
+            const topic: string = this.retrieveTopic(key);
             if (key.includes(topic) && this.isNewEvent(value)) {
                 console.log('Handling event with id: ' + key);
 
@@ -75,5 +75,13 @@ export default class EventBus implements IEventBus {
 
     private isEmptyEvent(data: any): boolean {
         return !data || Object.keys(data).length === 0;
+    }
+
+    private generateKey(topic: string): string {
+        return this.config.prefix + this.config.delimiter + topic + this.config.delimiter + this.getTime();
+    }
+
+    private retrieveTopic(key: string): string {
+        return key.split(this.config.delimiter)[1];
     }
 }

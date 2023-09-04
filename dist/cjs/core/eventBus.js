@@ -10,7 +10,7 @@ class EventBus {
         });
     }
     async send(topic, data) {
-        const key = topic + this.config.delimiter + this.getTime();
+        const key = this.generateKey(topic);
         return await this.storage.save(key, {
             isEmpty: this.isEmptyEvent(data),
             data: data
@@ -31,7 +31,7 @@ class EventBus {
     }
     async handle(map) {
         for (let [key, value] of map.entries()) {
-            const topic = key.split(this.config.delimiter)[0];
+            const topic = this.retrieveTopic(key);
             if (key.includes(topic) && this.isNewEvent(value)) {
                 console.log('Handling event with id: ' + key);
                 const listeners = this.listeners.get(topic);
@@ -60,6 +60,12 @@ class EventBus {
     }
     isEmptyEvent(data) {
         return !data || Object.keys(data).length === 0;
+    }
+    generateKey(topic) {
+        return this.config.prefix + this.config.delimiter + topic + this.config.delimiter + this.getTime();
+    }
+    retrieveTopic(key) {
+        return key.split(this.config.delimiter)[1];
     }
 }
 exports.default = EventBus;

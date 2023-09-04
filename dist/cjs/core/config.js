@@ -2,15 +2,18 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Config = void 0;
 class Config {
-    constructor(delimiter, removeOnceReceived) {
+    constructor(prefix, delimiter, removeOnceReceived) {
+        this.prefix = prefix;
         this.delimiter = delimiter;
         this.removeOnceReceived = removeOnceReceived;
     }
     static default() {
-        return new Config('_', false);
+        return new Config(Config.DEFAULT_PREFIX, Config.DEFAULT_DELIMITER, true);
     }
-    static of(delimiter = '_', removeOnceReceived = false) {
-        return new Config(delimiter, removeOnceReceived);
+    static of(prefix = Config.DEFAULT_PREFIX, delimiter = Config.DEFAULT_DELIMITER, removeOnceReceived = true) {
+        return new Config(prefix, delimiter, removeOnceReceived);
     }
 }
 exports.Config = Config;
+Config.DEFAULT_PREFIX = 'EEBE'; // Extension Event Bus Event
+Config.DEFAULT_DELIMITER = '_'; // Extension Event Bus Event

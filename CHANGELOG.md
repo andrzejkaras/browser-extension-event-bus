@@ -9,6 +9,8 @@ All notable changes to this project will be documented in this file.
 
 ## [0.4.0] - 2023-09-04
 
+- Add prefix and delimiter to event id
+
 ## [0.3.4] - 2023-04-05
 
 - Fix for handing an empty event

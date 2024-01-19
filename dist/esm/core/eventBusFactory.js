@@ -1,13 +1,10 @@
 import EventBus from "./eventBus";
-import LocalStorage from "./localStorage";
-import Browser from 'webextension-polyfill';
-const browser = Browser;
+import LocalStorageBuffer from "./localStorageBuffer";
 class EventBusFactory {
-    static getEventBus(config) {
+    static getEventBus(browser, config) {
         if (!EventBusFactory.eventBus) {
-            const localStorage = new LocalStorage(browser);
-            const bus = new EventBus(config, localStorage);
-            EventBusFactory.eventBus = bus;
+            const localStorage = new LocalStorageBuffer(browser);
+            EventBusFactory.eventBus = new EventBus(config, localStorage);
         }
         return EventBusFactory.eventBus;
     }

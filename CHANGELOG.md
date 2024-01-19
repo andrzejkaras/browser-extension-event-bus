@@ -1,6 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [0.5.0] - 2024-01-19
+
+- Renamed ILocalStorage to IEventBusBuffer
+- Implemented unit test
+- Add additional check for topic subscribers
+
 ## [0.4.0] - 2023-09-04
 
 - Added prefix to all event passed to event-bus

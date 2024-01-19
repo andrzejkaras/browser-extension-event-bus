@@ -76,8 +76,11 @@ const multiply = (n: number) => {
   console.log(result);
 }
 
+const browser = null; // import it from webextension-polyfill library
+const config = Config.default();
+
 // Create an event bus by using factory class
-const eventBus: IEventBus = EventBusFactory.getEventBus();
+const eventBus: IEventBus = EventBusFactory.getEventBus(browser, config);
 
 // Define all subsribents
 await eventBus.subscribe('numbers', console.log);

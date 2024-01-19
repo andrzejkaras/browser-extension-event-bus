@@ -1,14 +1,14 @@
 import { IEventBus } from "../iEventBus";
-import { ILocalStorage } from "../iLocalStorage";
+import { IEventBusBuffer } from "../iEventBusBuffer";
 import { Config } from "./config";
 
 export default class EventBus implements IEventBus {
     private config: Config;
-    private storage: ILocalStorage;
+    private storage: IEventBusBuffer;
 
     private listeners: Map<string, Function[]> = new Map<string, Function[]>();
 
-    public constructor(config: Config, storage: ILocalStorage) {
+    public constructor(config: Config, storage: IEventBusBuffer) {
         this.config = config;
         this.storage = storage;
         this.storage.registerListener(async (map: Map<any, any>) => {
@@ -17,6 +17,10 @@ export default class EventBus implements IEventBus {
     }
 
     public async send(topic: string, data?: any): Promise<boolean> {
+        if (!this.hasSubscribers(topic)) {
+            return true;
+        }
+
         const key: string = this.generateKey(topic);
         return await this.storage.save(key, {
             isEmpty: this.isEmptyEvent(data),
@@ -44,7 +48,7 @@ export default class EventBus implements IEventBus {
         for (let [key, value] of map.entries()) {
             const topic: string = this.retrieveTopic(key);
             if (key.includes(topic) && this.isNewEvent(value)) {
-                console.log('Handling event with id: ' + key);
+                console.info('[EventBus] Handling event with id: ' + key);
 
                 const listeners: Function[] | undefined = this.listeners.get(topic);
                 if (listeners && listeners.length > 0) {

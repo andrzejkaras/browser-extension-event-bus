@@ -1,7 +1,7 @@
 import { Browser, Storage } from "webextension-polyfill";
-import { ILocalStorage } from "../iLocalStorage";
+import { IEventBusBuffer } from "../iEventBusBuffer";
 
-export default class LocalStorage implements ILocalStorage {
+export default class LocalStorageBuffer implements IEventBusBuffer {
     private browser: Browser;
     private changeListener!: Function;
     public constructor(browser: Browser) {
@@ -49,5 +49,9 @@ export default class LocalStorage implements ILocalStorage {
             console.error('[EventBus] Error during removing data for key: ' + key);
             return false;
         }
+    }
+
+    size(): number {
+        throw new Error("Method not implemented.");
     }
 }
